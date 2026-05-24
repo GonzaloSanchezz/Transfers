@@ -1,0 +1,254 @@
+.section {
+  padding: var(--gap-xl) 5rem;
+  background: var(--ink-2);
+  position: relative;
+}
+
+.section::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 10%; right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-line), transparent);
+}
+
+.inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1.7fr;
+  gap: 7rem;
+  align-items: start;
+}
+
+/* ── Columna izquierda ── */
+.left {}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--font-body);
+  font-size: 0.58rem;
+  letter-spacing: 0.48em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.5rem;
+}
+
+.tag::before, .tag::after {
+  content: '';
+  display: block;
+  width: 28px; height: 1px;
+  background: var(--gold-line);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 4vw, 4.4rem);
+  font-weight: 400;
+  line-height: 1.08;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2.8rem;
+}
+
+.titleAccent {
+  font-style: italic;
+  font-weight: 500;
+  color: var(--gold);
+}
+
+.rule {
+  width: 48px; height: 1px;
+  background: linear-gradient(90deg, var(--gold), transparent);
+  margin-bottom: 2.8rem;
+}
+
+/* ── Contacto ── */
+.contactStack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
+.contactItem {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  group: true;
+  transition: opacity var(--t-fast);
+}
+
+.contactItem:hover { opacity: 0.75; }
+
+.contactIconBox {
+  width: 46px; height: 46px;
+  border: 1px solid var(--gold-line);
+  border-radius: var(--r);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gold);
+  flex-shrink: 0;
+  transition: background var(--t-fast), border-color var(--t-fast);
+}
+
+.contactItem:hover .contactIconBox {
+  background: var(--gold-subtle);
+  border-color: var(--gold);
+}
+
+.contactMeta {}
+
+.contactLabel {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 0.52rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--cream-dim);
+  margin-bottom: 0.2rem;
+}
+
+.contactValue {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 400;
+  color: var(--cream);
+}
+
+/* ── Formulario ── */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.1rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.field label {
+  font-family: var(--font-body);
+  font-size: 0.52rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.field input,
+.field select,
+.field textarea {
+  background: rgba(255,255,255,0.025);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-bottom-color: rgba(191,162,101,0.2);
+  color: var(--cream);
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  padding: 1rem 1.1rem;
+  border-radius: var(--r);
+  outline: none;
+  transition: border-color var(--t-fast), background var(--t-fast);
+  width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.field select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23bfa265' stroke-width='1.4' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.5rem;
+  cursor: pointer;
+}
+
+.field select option { background: var(--ink-2); color: var(--cream); }
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: rgba(191,162,101,0.45);
+  background: rgba(191,162,101,0.03);
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: rgba(184,176,160,0.3);
+  font-size: 0.82rem;
+}
+
+.field input[type="date"]::-webkit-calendar-picker-indicator,
+.field input[type="time"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.65) sepia(1) saturate(1.5) hue-rotate(358deg);
+  cursor: pointer;
+  opacity: 0.55;
+}
+
+.field textarea {
+  resize: none;
+  line-height: 1.75;
+}
+
+/* ── Botón enviar ── */
+.submitBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem;
+  background: var(--gold);
+  color: var(--ink);
+  border: none;
+  font-family: var(--font-body);
+  font-size: 0.62rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  padding: 1.25rem 2rem;
+  cursor: pointer;
+  transition: all var(--t-mid);
+  width: 100%;
+  border-radius: var(--r);
+  margin-top: 0.6rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.submitBtn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gold-pale);
+  transform: translateX(-100%);
+  transition: transform var(--t-mid);
+}
+
+.submitBtn:hover:not(:disabled)          { transform: translateY(-2px); box-shadow: var(--shadow-gold); }
+.submitBtn:hover:not(:disabled)::before  { transform: translateX(0); }
+.submitBtn > *                           { position: relative; z-index: 1; }
+
+.submitBtn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.submitted {
+  background: #1e3d1e !important;
+  color: #6fcf6f !important;
+}
+
+@media (max-width: 960px) {
+  .section { padding: 5rem 2rem; }
+  .inner   { grid-template-columns: 1fr; gap: 3.5rem; }
+  .row     { grid-template-columns: 1fr; }
+}

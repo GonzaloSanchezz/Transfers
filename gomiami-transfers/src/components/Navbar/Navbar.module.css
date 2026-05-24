@@ -1,0 +1,191 @@
+.nav {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem 5rem;
+  transition: padding var(--t-mid), background var(--t-mid), border-color var(--t-mid);
+}
+
+.nav.scrolled {
+  padding: 1.1rem 5rem;
+  background: rgba(5,5,5,0.94);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-bottom: 1px solid var(--gold-line);
+}
+
+/* ── Logo ── */
+.logo {
+  text-decoration: none;
+  display: flex;
+  align-items: baseline;
+  gap: 0;
+}
+
+.logoGo {
+  font-family: var(--font-display);
+  font-size: 1.65rem;
+  font-weight: 600;
+  font-style: italic;
+  color: var(--gold);
+  letter-spacing: -0.01em;
+}
+
+.logoMiami {
+  font-family: var(--font-display);
+  font-size: 1.65rem;
+  font-weight: 400;
+  color: var(--cream);
+  letter-spacing: -0.01em;
+}
+
+.logoSep {
+  width: 1px;
+  height: 18px;
+  background: var(--gold-line);
+  margin: 0 0.9rem;
+  align-self: center;
+}
+
+.logoTransfers {
+  font-family: var(--font-body);
+  font-size: 0.52rem;
+  font-weight: 400;
+  letter-spacing: 0.38em;
+  color: var(--cream-dim);
+  text-transform: uppercase;
+  align-self: center;
+}
+
+/* ── Links ── */
+.links {
+  display: flex;
+  list-style: none;
+  gap: 2.8rem;
+}
+
+.links a {
+  text-decoration: none;
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--cream-dim);
+  transition: color var(--t-fast);
+  position: relative;
+  padding-bottom: 3px;
+}
+
+.links a::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 0; height: 1px;
+  background: var(--gold);
+  transition: width var(--t-mid);
+}
+
+.links a:hover          { color: var(--cream); }
+.links a:hover::after   { width: 100%; }
+
+/* ── Right ── */
+.right {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.langToggle {
+  background: none;
+  border: 1px solid var(--gold-line);
+  color: var(--gold);
+  font-family: var(--font-body);
+  font-size: 0.58rem;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  padding: 0.45rem 0.75rem;
+  cursor: pointer;
+  transition: all var(--t-fast);
+  border-radius: var(--r);
+}
+
+.langToggle:hover {
+  background: var(--gold-subtle);
+  border-color: var(--gold);
+}
+
+.ctaBtn {
+  text-decoration: none;
+  background: transparent;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  font-family: var(--font-body);
+  font-size: 0.58rem;
+  font-weight: 400;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  padding: 0.75rem 1.6rem;
+  transition: all var(--t-mid);
+  border-radius: var(--r);
+  position: relative;
+  overflow: hidden;
+}
+
+.ctaBtn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gold);
+  transform: translateY(101%);
+  transition: transform var(--t-mid);
+}
+
+.ctaBtn:hover { color: var(--ink); }
+.ctaBtn:hover::before { transform: translateY(0); }
+.ctaBtn span { position: relative; z-index: 1; }
+
+/* ── Burger ── */
+.burger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.burger span {
+  display: block;
+  width: 24px; height: 1px;
+  background: var(--cream);
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+
+.burgerOpen span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.burgerOpen span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.burgerOpen span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+@media (max-width: 960px) {
+  .nav, .nav.scrolled { padding: 1.4rem 2rem; }
+  .links {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: var(--ink);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5rem;
+    z-index: -1;
+  }
+  .links.open     { display: flex; }
+  .links a        { font-size: 1rem; letter-spacing: 0.3em; }
+  .ctaBtn         { display: none; }
+  .burger         { display: flex; }
+}
