@@ -1,3 +1,4 @@
+/* ─── Sección y Layout ─── */
 .section {
   padding: var(--gap-xl) 5rem;
   background: var(--ink-2);
@@ -120,8 +121,7 @@
   color: var(--cream);
 }
 
-
-/* ── WIZARD (Formulario Multipaso) ── */
+/* ── WIZARD ── */
 .right {
   width: 100%;
 }
@@ -146,18 +146,14 @@
 
 .wizardGlow {
   position: absolute;
-  top: -100px;
-  right: -100px;
-  width: 300px;
-  height: 300px;
+  top: -100px; right: -100px;
+  width: 300px; height: 300px;
   background: radial-gradient(circle, rgba(191,162,101,0.04) 0%, transparent 70%);
   pointer-events: none;
 }
 
 /* Progreso */
-.progressHeader {
-  margin-bottom: 2.5rem;
-}
+.progressHeader { margin-bottom: 2.5rem; }
 
 .stepInfo {
   display: flex;
@@ -189,8 +185,7 @@
 }
 
 .progressBar {
-  width: 100%;
-  height: 3px;
+  width: 100%; height: 3px;
   background: rgba(255,255,255,0.06);
   position: relative;
   border-radius: 2px;
@@ -206,7 +201,7 @@
 
 /* Contenedor de Pasos */
 .stepContent {
-  min-height: 280px; /* Evita saltos bruscos en la UI */
+  min-height: 280px;
   position: relative;
 }
 
@@ -216,7 +211,7 @@
 
 @keyframes slideFadeIn {
   from { opacity: 0; transform: translateY(15px); }
-  to { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 /* Campos Comunes */
@@ -277,9 +272,7 @@
   cursor: pointer;
 }
 
-.field textarea {
-  resize: vertical;
-}
+.field textarea { resize: vertical; }
 
 /* Paso 1: Ruta */
 .fieldGroup {
@@ -322,7 +315,181 @@
   gap: 1.5rem;
 }
 
-/* Paso 2: Custom Pasajeros */
+/* ── Autocomplete Dropdown ── */
+.autocompleteWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.suggestions {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0; right: 0;
+  background: var(--ink);
+  border: 1px solid rgba(191,162,101,0.25);
+  border-radius: 8px;
+  list-style: none;
+  margin: 0; padding: 0.4rem 0;
+  z-index: 100;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.suggestionItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  padding: 0.75rem 1.1rem;
+  cursor: pointer;
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  color: var(--cream-dim);
+  line-height: 1.4;
+  transition: background var(--t-fast), color var(--t-fast);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.suggestionItem:last-child { border-bottom: none; }
+
+.suggestionItem:hover {
+  background: rgba(191,162,101,0.07);
+  color: var(--cream);
+}
+
+/* ─────────────────────────────────────
+   PRECIO ESTIMADO (Paso 1)
+───────────────────────────────────── */
+.priceEstimateBox {
+  margin-top: 1.8rem;
+  border-radius: 8px;
+  overflow: hidden;
+  animation: slideFadeIn 0.4s ease forwards;
+}
+
+/* Loading */
+.priceLoading {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 1.2rem 1.4rem;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 8px;
+  font-family: var(--font-ui);
+  font-size: 0.82rem;
+  color: var(--cream-dim);
+  letter-spacing: 0.06em;
+}
+
+.priceSpinner {
+  width: 16px; height: 16px;
+  border: 2px solid rgba(191,162,101,0.2);
+  border-top-color: var(--gold);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Error */
+.priceError {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 1rem 1.4rem;
+  background: rgba(255, 80, 80, 0.05);
+  border: 1px solid rgba(255, 80, 80, 0.15);
+  border-radius: 8px;
+  font-family: var(--font-ui);
+  font-size: 0.82rem;
+  color: #ff9090;
+  letter-spacing: 0.04em;
+}
+
+/* Resultado */
+.priceResult {
+  background: linear-gradient(135deg, rgba(191,162,101,0.06) 0%, rgba(191,162,101,0.02) 100%);
+  border: 1px solid rgba(191,162,101,0.2);
+  border-radius: 8px;
+  padding: 1.4rem 1.6rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.priceResult::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px; height: 100%;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+}
+
+.priceRouteStats {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.priceStat {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  color: var(--cream-dim);
+  letter-spacing: 0.05em;
+}
+
+.priceDot {
+  width: 3px; height: 3px;
+  border-radius: 50%;
+  background: var(--gold-line);
+}
+
+.priceFigure {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.priceFrom {
+  font-family: var(--font-body);
+  font-size: 0.55rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--cream-dim);
+}
+
+.priceAmount {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  font-weight: 400;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.priceCurrency {
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  color: var(--cream-dim);
+  letter-spacing: 0.1em;
+}
+
+.priceNote {
+  margin-top: 0.7rem;
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  color: var(--cream-dim);
+  opacity: 0.7;
+}
+
+/* Paso 2: Pasajeros */
 .paxControl {
   display: flex;
   align-items: center;
@@ -386,7 +553,7 @@
 .vehicleCard {
   border: 1px solid rgba(255,255,255,0.08);
   background: rgba(255,255,255,0.02);
-  padding: 1.4rem 1.2rem;
+  padding: 1.2rem 1.2rem;
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -417,9 +584,7 @@
   transition: border-color var(--t-fast);
 }
 
-.vehicleActive .vehicleRadio {
-  border-color: var(--gold);
-}
+.vehicleActive .vehicleRadio { border-color: var(--gold); }
 
 .vehicleRadioDot {
   width: 10px; height: 10px;
@@ -430,16 +595,30 @@
 
 @keyframes popIn {
   from { transform: scale(0); }
-  to { transform: scale(1); }
+  to   { transform: scale(1); }
+}
+
+.vehicleCardBody {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
 }
 
 .vehicleName {
   font-family: var(--font-ui);
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   color: var(--cream);
+  line-height: 1.3;
 }
 
-/* Paso 5: Ticket Final */
+.vehiclePrice {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  color: var(--gold);
+}
+
+/* Paso 5: Ticket */
 .ticket {
   background: var(--ink-2);
   border: 1px solid var(--gold-line);
@@ -502,18 +681,47 @@
   line-height: 1.5;
 }
 
+/* Precio final en ticket */
+.ticketPrice {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  border-top: 1px solid rgba(191,162,101,0.2);
+  border-bottom: 1px dashed rgba(191,162,101,0.3);
+  padding: 1.2rem 0;
+  margin-bottom: 1.5rem;
+}
+
+.ticketPriceLabel {
+  font-family: var(--font-body);
+  font-size: 0.58rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--cream-dim);
+}
+
+.ticketPriceAmount {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: var(--gold);
+  font-weight: 400;
+}
+
+.ticketPriceAmount small {
+  font-size: 0.85rem;
+  color: var(--cream-dim);
+  margin-left: 0.3rem;
+}
+
 .ticketFooter {
-  border-top: 1px dashed rgba(191,162,101,0.3);
-  padding-top: 1.5rem;
   font-family: var(--font-ui);
   font-size: 0.9rem;
   color: var(--cream);
 }
-.ticketFooter span {
-  color: var(--gold);
-}
 
-/* Controles de Navegación */
+.ticketFooter span { color: var(--gold); }
+
+/* Navegación */
 .wizardNav {
   display: flex;
   align-items: center;
@@ -536,9 +744,7 @@
   padding: 0.5rem 0;
 }
 
-.btnPrev:hover {
-  color: var(--gold);
-}
+.btnPrev:hover { color: var(--gold); }
 
 .btnNext, .submitBtn {
   display: flex;
@@ -569,19 +775,18 @@
   transition: transform var(--t-mid);
 }
 
-.btnNext:hover:not(:disabled), .submitBtn:hover:not(:disabled) {
+.btnNext:hover:not(:disabled),
+.submitBtn:hover:not(:disabled) {
   transform: translateY(-2px);
   box-shadow: var(--shadow-gold);
 }
 
-.btnNext:hover:not(:disabled)::before, .submitBtn:hover:not(:disabled)::before {
+.btnNext:hover:not(:disabled)::before,
+.submitBtn:hover:not(:disabled)::before {
   transform: translateX(0);
 }
 
-.btnNext > *, .submitBtn > * {
-  position: relative;
-  z-index: 1;
-}
+.btnNext > *, .submitBtn > * { position: relative; z-index: 1; }
 
 .btnNext:disabled {
   opacity: 0.3;
@@ -600,11 +805,9 @@
   pointer-events: none;
 }
 
-.submitted::before {
-  display: none;
-}
+.submitted::before { display: none; }
 
-/* Responsividad */
+/* ── Responsividad ── */
 @media (max-width: 1100px) {
   .inner { grid-template-columns: 1fr; gap: 4rem; }
   .left { max-width: 600px; }
@@ -618,4 +821,73 @@
   .vehicleGrid { grid-template-columns: 1fr; }
   .ticketBody { grid-template-columns: 1fr; gap: 1.2rem; }
   .stepTitle { display: none; }
+  .priceAmount { font-size: 1.8rem; }
+}
+
+/* ─────────────────────────────────────
+   BADGE "Solo traslados en Florida"
+───────────────────────────────────── */
+.flBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-body);
+  font-size: 0.52rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid var(--gold-line);
+  border-radius: 20px;
+  padding: 0.35rem 0.85rem;
+  margin-bottom: 1.4rem;
+  background: rgba(191,162,101,0.04);
+}
+
+.flBadge svg {
+  flex-shrink: 0;
+  opacity: 0.8;
+}
+
+/* ─────────────────────────────────────
+   SUGERENCIAS RÁPIDAS (chips)
+───────────────────────────────────── */
+.suggestBox {
+  margin-top: 0.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.suggestLabel {
+  font-family: var(--font-body);
+  font-size: 0.48rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--cream-dim);
+  opacity: 0.6;
+}
+
+.suggestList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.suggestChip {
+  background: transparent;
+  border: 1px solid rgba(191,162,101,0.18);
+  border-radius: 20px;
+  padding: 0.3rem 0.75rem;
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  color: var(--cream-dim);
+  cursor: pointer;
+  transition: background var(--t-fast), border-color var(--t-fast), color var(--t-fast);
+  letter-spacing: 0.03em;
+}
+
+.suggestChip:hover {
+  background: rgba(191,162,101,0.07);
+  border-color: var(--gold-line);
+  color: var(--gold);
 }
