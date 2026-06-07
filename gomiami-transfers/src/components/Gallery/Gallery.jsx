@@ -1,14 +1,19 @@
- 
 import { useState } from 'react'
 import { useLang } from '../../context/LangContext'
 import styles from './Gallery.module.css'
 
+import interiorVipImg  from '../../assets/gallery-interior-vip.jpg'
+import nightTransferImg from '../../assets/gallery-night-transfer.jpg'
+import airportPickupImg from '../../assets/gallery-airport-pickup.jpg'
+import portTransferImg  from '../../assets/gallery-port-transfer.jpg'
+import orlandoRouteImg from '../../assets/gallery-orlando-route.jpg'
+
 const items = [
-  { id: 1, label: 'Interior VIP', aspect: 'wide', gradient: 'linear-gradient(135deg, #1a1410 0%, #2a2015 50%, #1a1008 100%)' },
-  { id: 2, label: 'Night Transfer', aspect: 'tall', gradient: 'linear-gradient(135deg, #0a0a0f 0%, #12121a 50%, #080810 100%)' },
-  { id: 3, label: 'Airport Pickup', aspect: 'normal', gradient: 'linear-gradient(135deg, #0f0f0a 0%, #1a1a10 50%, #0a0a08 100%)' },
-  { id: 4, label: 'Fleet Line', aspect: 'normal', gradient: 'linear-gradient(135deg, #0a0f0a 0%, #101a10 50%, #080a08 100%)' },
-  { id: 5, label: 'Orlando Route', aspect: 'wide', gradient: 'linear-gradient(135deg, #0f0a10 0%, #1a1020 50%, #0a0810 100%)' },
+  { id: 1, label: 'Interior VIP',   aspect: 'wide',   img: interiorVipImg  },
+  { id: 2, label: 'Night Transfer', aspect: 'tall',   img: nightTransferImg },
+  { id: 3, label: 'Airport Pickup', aspect: 'normal', img: airportPickupImg },
+  { id: 4, label: 'Port Transfer',  aspect: 'normal', img: portTransferImg },
+  { id: 5, label: 'Orlando Route',  aspect: 'wide',   img: orlandoRouteImg },
 ]
 
 function GalleryItem({ item }) {
@@ -19,10 +24,14 @@ function GalleryItem({ item }) {
       onMouseEnter={() => setActive(true)}
       onMouseLeave={() => setActive(false)}
     >
-      <div className={styles.itemBg} style={{ background: item.gradient }}>
-        <div className={styles.itemPattern} />
-        <div className={styles.itemLines} />
-      </div>
+      <img
+        src={item.img}
+        alt={item.label}
+        className={styles.itemPhoto}
+        draggable={false}
+        loading="lazy"
+      />
+      <div className={styles.itemBase} />
       <div className={`${styles.itemOverlay} ${active ? styles.itemOverlayActive : ''}`} />
       <div className={styles.itemLabel}>{item.label}</div>
       <div className={styles.itemCorner} />
@@ -47,13 +56,6 @@ export default function Gallery() {
         <div className={styles.grid}>
           {items.map(item => <GalleryItem key={item.id} item={item} />)}
         </div>
-        <p className={styles.note}>
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="1.2"/>
-            <path d="M8 7v5M8 5v.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-          </svg>
-          Real vehicle photos coming soon — placeholder gallery shown above.
-        </p>
       </div>
     </section>
   )

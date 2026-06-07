@@ -117,40 +117,72 @@
   color: var(--cream-dim);
 }
 
-/* ── Ilustración vehículo ── */
+/* ── Imagen vehículo ── */
 .visual {
   position: relative;
-  height: 110px;
-  margin-bottom: 2rem;
+  width: 100%;
+  height: 170px;
+  margin: 0 0 2rem 0;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
+  /* Sin background propio — hereda el de la card */
 }
 
-.carSvg {
+.vehicleImg {
   width: 100%;
   height: 100%;
-  transition: filter var(--t-mid);
-  filter: drop-shadow(0 8px 20px rgba(0,0,0,0.7));
+  object-fit: contain;       /* Respeta el PNG recortado sin deformarlo */
+  object-position: center bottom;
+  display: block;
+  transition: transform 0.5s ease, filter 0.5s ease;
+  filter: drop-shadow(0 10px 24px rgba(0,0,0,0.8));
+  position: relative;
+  z-index: 1;
 }
 
-.card:hover .carSvg {
-  filter: drop-shadow(0 12px 32px rgba(191,162,101,0.12));
+.card:hover .vehicleImg {
+  transform: scale(1.04) translateY(-4px);
+  filter:
+    drop-shadow(0 16px 32px rgba(0,0,0,0.7))
+    drop-shadow(0 0 24px rgba(191,162,101,0.18));
 }
 
+/* Glow de piso — más dramático al hover */
 .visualGlow {
   position: absolute;
-  bottom: -4px;
+  bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 70%;
-  height: 24px;
-  background: radial-gradient(ellipse, rgba(191,162,101,0.12) 0%, transparent 70%);
+  width: 85%;
+  height: 32px;
+  background: radial-gradient(ellipse at center, rgba(191,162,101,0.22) 0%, transparent 72%);
   opacity: 0;
-  transition: opacity var(--t-mid);
+  transition: opacity 0.45s ease, width 0.45s ease;
+  z-index: 0;
 }
 
-.card:hover .visualGlow { opacity: 1; }
+.card:hover .visualGlow {
+  opacity: 1;
+  width: 100%;
+}
+
+/* Línea de piso sutil */
+.visualGlow::after {
+  content: '';
+  position: absolute;
+  bottom: 6px;
+  left: 10%;
+  width: 80%;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(191,162,101,0.35), transparent);
+  opacity: 0;
+  transition: opacity 0.45s ease 0.1s;
+}
+
+.card:hover .visualGlow::after {
+  opacity: 1;
+}
 
 /* ── Info ── */
 .cardName {
