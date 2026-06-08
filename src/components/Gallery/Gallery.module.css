@@ -1,0 +1,166 @@
+.section {
+  padding: var(--gap-xl) 5rem;
+  background: var(--ink-3);
+  position: relative;
+}
+
+.section::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 10%; right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-line), transparent);
+}
+
+.inner { max-width: 1400px; margin: 0 auto; }
+
+.header {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 4rem;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--font-body);
+  font-size: 0.58rem;
+  letter-spacing: 0.48em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.5rem;
+}
+
+.tag::before, .tag::after {
+  content: '';
+  display: block;
+  width: 28px; height: 1px;
+  background: var(--gold-line);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(2.6rem, 5vw, 5.2rem);
+  font-weight: 400;
+  line-height: 1.08;
+  display: flex;
+  flex-direction: column;
+}
+
+.titleAccent {
+  font-style: italic;
+  color: var(--gold);
+}
+
+/* ── Grid ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 270px 270px;
+  gap: 3px;
+}
+
+.item {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.wide   { grid-column: span 2; }
+.tall   { grid-column: 3; grid-row: 1 / 3; }
+.normal { grid-column: span 1; }
+
+/* ── Foto ── */
+.itemPhoto {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              filter 0.7s ease;
+  filter: brightness(0.72) saturate(0.75);
+  z-index: 0;
+}
+
+.item:hover .itemPhoto {
+  transform: scale(1.06);
+  filter: brightness(0.6) saturate(0.65);
+}
+
+/* Gradiente oscuro — el label siempre se lee */
+.itemBase {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.75) 0%,
+    rgba(0, 0, 0, 0.15) 45%,
+    transparent 100%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Tinte gold al hover */
+.itemOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(191, 162, 101, 0.09);
+  border: 1px solid transparent;
+  opacity: 0;
+  transition: opacity 0.4s ease, border-color 0.4s ease;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.itemOverlayActive {
+  opacity: 1;
+  border-color: rgba(191, 162, 101, 0.25);
+}
+
+/* ── Label ── */
+.itemLabel {
+  position: absolute;
+  bottom: 1.4rem;
+  left: 1.4rem;
+  font-family: var(--font-body);
+  font-size: 0.55rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+  background: rgba(5, 5, 5, 0.82);
+  padding: 0.38rem 0.75rem;
+  border-left: 1.5px solid var(--gold);
+  z-index: 3;
+  backdrop-filter: blur(4px);
+}
+
+/* ── Esquina decorativa ── */
+.itemCorner {
+  position: absolute;
+  top: 0.9rem;
+  right: 0.9rem;
+  width: 16px; height: 16px;
+  border-top: 1px solid rgba(191, 162, 101, 0.35);
+  border-right: 1px solid rgba(191, 162, 101, 0.35);
+  z-index: 3;
+  transition: border-color var(--t-mid);
+}
+
+.item:hover .itemCorner { border-color: var(--gold); }
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .section { padding: 5rem 2rem; }
+  .grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+  .wide, .tall, .normal { grid-column: span 1; grid-row: span 1; }
+  .item { height: 200px; }
+}
+
+@media (max-width: 600px) {
+  .grid { grid-template-columns: 1fr; }
+  .item { height: 180px; }
+}
