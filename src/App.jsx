@@ -6,7 +6,7 @@ import Fleet from './components/Fleet/Fleet'
 import Gallery from './components/Gallery/Gallery'
 import Quoter from './components/Quoter/Quoter'
 import Footer from './components/Footer/Footer'
-import WhatsAppButton from './components/WhatsappButton/WhatsAppButton'
+import WhatsAppButton from './components/WhatsappButton/WhatsAppButton.jsx'
 
 export default function App() {
   return (
