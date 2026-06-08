@@ -2,7 +2,8 @@ import { useLang } from '../../context/LangContext'
 import styles from './Footer.module.css'
 
 export default function Footer() {
-  const { t } = useLang()
+  const { t, lang } = useLang()
+  const isEs = lang === 'es'
 
   return (
     <footer className={styles.footer} id="contact">
@@ -27,16 +28,16 @@ export default function Footer() {
         </div>
 
         <div className={styles.col}>
-          <h4>Services</h4>
+          <h4>{t.nav.services}</h4>
           <ul>
-            {['Airport Transfers','Hotel Transfers','Orlando Trips','Casino Runs','Port of Miami','Group Events'].map(s => (
-              <li key={s}><a href="#services">{s}</a></li>
+            {t.services.items.slice(0,6).map(s => (
+              <li key={s.title}><a href="#services">{s.title}</a></li>
             ))}
           </ul>
         </div>
 
         <div className={styles.col}>
-          <h4>Fleet</h4>
+          <h4>{t.nav.fleet}</h4>
           <ul>
             {['Cadillac Escalade','Chevrolet Tahoe','GMC Yukon','Mercedes Sprinter','Ford Transit','VW Atlas'].map(v => (
               <li key={v}><a href="#fleet">{v}</a></li>
@@ -65,7 +66,7 @@ export default function Footer() {
         <div className={styles.bottomRight}>
           <span>Miami, FL</span>
           <span className={styles.bottomDot} />
-          <span>Executive Transportation</span>
+          <span>{isEs ? 'Transporte Ejecutivo' : 'Executive Transportation'}</span>
         </div>
       </div>
     </footer>

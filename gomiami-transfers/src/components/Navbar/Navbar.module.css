@@ -18,12 +18,20 @@
   border-bottom: 1px solid var(--gold-line);
 }
 
+/* Evita que el Navbar se ponga transparente si el menú está abierto */
+.nav.navMenuOpen {
+  background: rgba(5,5,5,1);
+  border-bottom: 1px solid rgba(191,162,101,0.2);
+}
+
 /* ── Logo ── */
 .logo {
   text-decoration: none;
   display: flex;
   align-items: baseline;
   gap: 0;
+  position: relative;
+  z-index: 1002; /* Siempre por encima del menú */
 }
 
 .logoGo {
@@ -61,7 +69,7 @@
   align-self: center;
 }
 
-/* ── Links ── */
+/* ── Links Desktop ── */
 .links {
   display: flex;
   list-style: none;
@@ -89,14 +97,16 @@
   transition: width var(--t-mid);
 }
 
-.links a:hover          { color: var(--cream); }
-.links a:hover::after   { width: 100%; }
+.links a:hover { color: var(--cream); }
+.links a:hover::after { width: 100%; }
 
-/* ── Right ── */
+/* ── Right Section ── */
 .right {
   display: flex;
   align-items: center;
   gap: 1.2rem;
+  position: relative;
+  z-index: 1002; /* Por encima del menú */
 }
 
 .langToggle {
@@ -148,44 +158,109 @@
 .ctaBtn:hover::before { transform: translateY(0); }
 .ctaBtn span { position: relative; z-index: 1; }
 
-/* ── Burger ── */
+/* ── Burger Icon ── */
 .burger {
   display: none;
   flex-direction: column;
-  gap: 5px;
+  justify-content: center;
+  align-items: center;
+  width: 44px;
+  height: 44px;
+  gap: 6px;
   background: none;
   border: none;
   cursor: pointer;
-  padding: 4px;
+  padding: 8px;
 }
 
 .burger span {
   display: block;
-  width: 24px; height: 1px;
-  background: var(--cream);
-  transition: all 0.3s ease;
+  width: 24px; height: 1.5px;
+  background: var(--gold);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   transform-origin: center;
 }
 
-.burgerOpen span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.burgerOpen span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
 .burgerOpen span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-.burgerOpen span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+.burgerOpen span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
 
-@media (max-width: 960px) {
-  .nav, .nav.scrolled { padding: 1.4rem 2rem; }
+/* ── Mobile Menu Overlay (Click out) ── */
+.menuOverlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+@media (max-width: 1024px) {
+  .nav, .nav.scrolled { padding: 1.2rem 1.5rem; }
+  
+  .logoTransfers { display: none; } /* Simplificamos logo en celular */
+  .logoSep { display: none; }
+  
+  .ctaBtn { display: none; } /* Ocultamos Quote en navbar top, dejarlo para hero */
+  .burger { display: flex; }
+  
+  /* ── MENÚ MOBILE DESPLEGABLE ── */
   .links {
-    display: none;
     position: fixed;
-    inset: 0;
-    background: var(--ink);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 65vh; /* Ocupa un poco más de la mitad de la pantalla */
+    background: rgba(10, 10, 10, 0.98);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 2.5rem;
-    z-index: -1;
+    gap: 2rem;
+    padding-top: 5rem;
+    z-index: 1001; /* Debajo del Header pero arriba del Overlay */
+    border-bottom: 1px solid rgba(191,162,101,0.2);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+    
+    /* Animación de entrada y salida */
+    transform: translateY(-100%);
+    visibility: hidden;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s;
   }
-  .links.open     { display: flex; }
-  .links a        { font-size: 1rem; letter-spacing: 0.3em; }
-  .ctaBtn         { display: none; }
-  .burger         { display: flex; }
+
+  .links.open {
+    transform: translateY(0);
+    visibility: visible;
+  }
+
+  .links a {
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    color: #fff;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease, color 0.3s ease;
+  }
+
+  /* Animación en cascada de los links al abrir */
+  .links.open li:nth-child(1) a { transition-delay: 0.1s; opacity: 1; transform: translateY(0); }
+  .links.open li:nth-child(2) a { transition-delay: 0.15s; opacity: 1; transform: translateY(0); }
+  .links.open li:nth-child(3) a { transition-delay: 0.2s; opacity: 1; transform: translateY(0); }
+  .links.open li:nth-child(4) a { transition-delay: 0.25s; opacity: 1; transform: translateY(0); }
+  .links.open li:nth-child(5) a { transition-delay: 0.3s; opacity: 1; transform: translateY(0); }
+
+  .links a:active { color: var(--gold); }
+  .links a::after { display: none; } /* Ocultar linea underline en mobile */
+
+  /* Activar el Overlay */
+  .menuOverlay { display: block; }
+  .menuOverlayOpen {
+    opacity: 1;
+    pointer-events: auto;
+  }
 }

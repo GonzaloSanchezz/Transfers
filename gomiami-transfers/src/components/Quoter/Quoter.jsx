@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useLang } from '../../context/LangContext'
 import styles from './Quoter.module.css'
 
 const VEHICLES = [
@@ -11,8 +12,6 @@ const VEHICLES = [
 ]
 
 const WA_NUMBER = '13053361521'
-
-const STEPS = ['Ruta', 'Vehículo', 'Horario y pasajeros', 'Tus datos', 'Confirmar']
 
 const INITIAL_FORM = {
   from: '',
@@ -27,6 +26,13 @@ const INITIAL_FORM = {
 }
 
 export default function Quoter() {
+  const { t, lang } = useLang()
+  const isEs = lang === 'es'
+  
+  const STEPS = isEs 
+    ? ['Ruta', 'Vehículo', 'Horario y pax', 'Tus datos', 'Confirmar']
+    : ['Route', 'Vehicle', 'Time & Pax', 'Your Info', 'Confirm']
+
   const [step, setStep]       = useState(1)
   const [form, setForm]       = useState(INITIAL_FORM)
   const [submitted, setSubmitted] = useState(false)
@@ -60,9 +66,8 @@ export default function Quoter() {
   const handlePrev = () => setStep(s => Math.max(s - 1, 1))
 
   const handleSubmit = () => {
-    const msg = [
-      `🚗 *GoMiami Transfers – Reserva VIP*`,
-      ``,
+    const msgLinesEs = [
+      `🚗 *GoMiami Transfers – Reserva VIP*`, ``,
       `👤 *Cliente:* ${form.name}`,
       `📞 *Teléfono:* ${form.phone}`,
       `📍 *Origen:* ${form.from}`,
@@ -71,10 +76,25 @@ export default function Quoter() {
       `📅 *Fecha:* ${form.date}`,
       `⏰ *Hora:* ${form.time}`,
       `👥 *Pasajeros:* ${form.passengers}`,
-      form.notes ? `📝 *Notas:* ${form.notes}` : null,
-      ``,
-      `_Solicito confirmar disponibilidad._`,
-    ].filter(line => line !== null).join('\n')
+      form.notes ? `📝 *Notas:* ${form.notes}` : null, ``,
+      `_Solicito confirmar disponibilidad._`
+    ]
+
+    const msgLinesEn = [
+      `🚗 *GoMiami Transfers – VIP Booking*`, ``,
+      `👤 *Client:* ${form.name}`,
+      `📞 *Phone:* ${form.phone}`,
+      `📍 *Pickup:* ${form.from}`,
+      `🏁 *Dropoff:* ${form.to}`,
+      `🚙 *Vehicle:* ${form.vehicle}`,
+      `📅 *Date:* ${form.date}`,
+      `⏰ *Time:* ${form.time}`,
+      `👥 *Passengers:* ${form.passengers}`,
+      form.notes ? `📝 *Notes:* ${form.notes}` : null, ``,
+      `_Please confirm availability._`
+    ]
+
+    const msg = (isEs ? msgLinesEs : msgLinesEn).filter(line => line !== null).join('\n')
 
     window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank')
     setSubmitted(true)
@@ -91,7 +111,7 @@ export default function Quoter() {
 
         {/* ── Left panel ── */}
         <div className={styles.left}>
-          <h2 className={styles.title}>Cotizá tu traslado</h2>
+          <h2 className={styles.title}>{t.quoter.title.replace('\n', ' ')}</h2>
           <div className={styles.contactStack}>
             <a href="tel:+13053361521" className={styles.contactItem}>
               <div className={styles.contactIconBox}>
@@ -150,22 +170,22 @@ export default function Quoter() {
                     </div>
                     <div className={styles.routeInputs}>
                       <div className={styles.field}>
-                        <label>Origen</label>
+                        <label>{t.quoter.from}</label>
                         <input
                           name="from"
                           value={form.from}
                           onChange={handleChange}
-                          placeholder="Ej. Miami International Airport"
+                          placeholder={t.quoter.fromPlaceholder}
                           autoFocus
                         />
                       </div>
                       <div className={styles.field}>
-                        <label>Destino</label>
+                        <label>{t.quoter.to}</label>
                         <input
                           name="to"
                           value={form.to}
                           onChange={handleChange}
-                          placeholder="Ej. South Beach, Hotel, Puerto..."
+                          placeholder={t.quoter.toPlaceholder}
                         />
                       </div>
                     </div>
@@ -200,16 +220,16 @@ export default function Quoter() {
                 <div className={styles.stepWrapper}>
                   <div className={styles.row}>
                     <div className={styles.field}>
-                      <label>Fecha</label>
+                      <label>{t.quoter.date}</label>
                       <input type="date" name="date" value={form.date} onChange={handleChange} autoFocus />
                     </div>
                     <div className={styles.field}>
-                      <label>Hora</label>
+                      <label>{t.quoter.time}</label>
                       <input type="time" name="time" value={form.time} onChange={handleChange} />
                     </div>
                   </div>
                   <div className={styles.field} style={{ marginTop: '1.5rem' }}>
-                    <label>Pasajeros</label>
+                    <label>{t.quoter.passengers}</label>
                     <div className={styles.paxControl}>
                       <button className={styles.paxBtn} onClick={() => handlePax(-1)} disabled={form.passengers <= 1}>-</button>
                       <div className={styles.paxDisplay}>
@@ -232,22 +252,22 @@ export default function Quoter() {
                 <div className={styles.stepWrapper}>
                   <div className={styles.row}>
                     <div className={styles.field}>
-                      <label>Nombre</label>
+                      <label>{t.quoter.name}</label>
                       <input name="name" value={form.name} onChange={handleChange} placeholder="John Doe" autoFocus />
                     </div>
                     <div className={styles.field}>
-                      <label>Teléfono</label>
+                      <label>{t.quoter.phone}</label>
                       <input name="phone" value={form.phone} onChange={handleChange} placeholder="+1 (305) 000-0000" />
                     </div>
                   </div>
                   <div className={styles.field} style={{ marginTop: '1.5rem' }}>
-                    <label>Notas (opcional)</label>
+                    <label>{t.quoter.notes}</label>
                     <textarea
                       name="notes"
                       value={form.notes}
                       onChange={handleChange}
                       rows={3}
-                      placeholder="Nro. de vuelo, sillas de bebé, equipaje extra..."
+                      placeholder={isEs ? "Nro. de vuelo, sillas de bebé, equipaje extra..." : "Flight number, child seats, extra luggage..."}
                     />
                   </div>
                 </div>
@@ -262,17 +282,17 @@ export default function Quoter() {
                       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" strokeWidth="1.5">
                         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                       </svg>
-                      <h3>Resumen del viaje</h3>
+                      <h3>{isEs ? 'Resumen del viaje' : 'Trip Summary'}</h3>
                     </div>
                     <div className={styles.ticketBody}>
                       {[
-                        ['Origen',      form.from],
-                        ['Destino',     form.to],
-                        ['Vehículo',    form.vehicle],
-                        ['Horario',     `${form.date} · ${form.time}`],
-                        ['Pasajeros',   `${form.passengers} pax`],
-                        ['Cliente',     `${form.name} · ${form.phone}`],
-                        form.notes ? ['Notas', form.notes] : null,
+                        [t.quoter.from,      form.from],
+                        [t.quoter.to,        form.to],
+                        [t.quoter.vehicle,   form.vehicle],
+                        [isEs ? 'Horario' : 'Time', `${form.date} · ${form.time}`],
+                        [t.quoter.passengers,`${form.passengers} pax`],
+                        [isEs ? 'Cliente' : 'Client', `${form.name} · ${form.phone}`],
+                        form.notes ? [isEs ? 'Notas' : 'Notes', form.notes] : null,
                       ].filter(Boolean).map(([label, val]) => (
                         <div key={label} className={styles.ticketItem}>
                           <span>{label}</span>
@@ -281,7 +301,7 @@ export default function Quoter() {
                       ))}
                     </div>
                     <div className={styles.ticketFooter}>
-                      <span>Cliente: </span>{form.name} ({form.phone})
+                      <span>{isEs ? 'Cliente: ' : 'Client: '}</span>{form.name} ({form.phone})
                     </div>
                   </div>
                 </div>
@@ -291,7 +311,7 @@ export default function Quoter() {
             {/* Navigation */}
             <div className={styles.wizardNav}>
               {step > 1
-                ? <button className={styles.btnPrev} onClick={handlePrev}>← Atrás</button>
+                ? <button className={styles.btnPrev} onClick={handlePrev}>{isEs ? '← Atrás' : '← Back'}</button>
                 : <div />
               }
               {step < totalSteps ? (
@@ -300,7 +320,7 @@ export default function Quoter() {
                   onClick={handleNext}
                   disabled={!isStepValid()}
                 >
-                  Siguiente →
+                  {isEs ? 'Siguiente →' : 'Next →'}
                 </button>
               ) : (
                 <button
@@ -308,12 +328,12 @@ export default function Quoter() {
                   onClick={handleSubmit}
                   disabled={submitted}
                 >
-                  {submitted ? '✓ ¡Enviado!' : (
+                  {submitted ? (isEs ? '✓ ¡Enviado!' : '✓ Sent!') : (
                     <>
                       <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                         <path d="M18 2L9 11M18 2L12 18l-3-7-7-3 16-6z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
-                      Enviar por WhatsApp
+                      {t.quoter.submit}
                     </>
                   )}
                 </button>

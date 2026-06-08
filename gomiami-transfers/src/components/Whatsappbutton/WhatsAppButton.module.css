@@ -1,0 +1,179 @@
+.wrapper {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 990;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+/* ── Menú Desplegable ── */
+.menu {
+  position: absolute;
+  bottom: 80px; /* Separación sobre el botón */
+  right: 0;
+  width: 260px;
+  background: rgba(15, 15, 15, 0.9);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(191,162,101,0.3);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+  
+  /* Animación de entrada */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px) scale(0.95);
+  transform-origin: bottom right;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.menuOpen {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+.menuHeader {
+  background: rgba(191,162,101,0.1);
+  border-bottom: 1px solid rgba(191,162,101,0.15);
+  padding: 1rem;
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-align: left;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+}
+
+.optionBtn {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  padding: 1rem;
+  color: #fff;
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.optionBtn:last-child {
+  border-bottom: none;
+}
+
+.optionBtn svg {
+  color: rgba(255,255,255,0.3);
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .optionBtn:hover {
+    background: rgba(191,162,101,0.08);
+    color: var(--gold);
+  }
+  .optionBtn:hover svg {
+    color: var(--gold);
+    transform: translateX(4px) translateY(-4px);
+  }
+}
+
+.optionBtn:active {
+  background: rgba(191,162,101,0.15);
+}
+
+/* ── Botón Principal ── */
+.waBtn {
+  width: 60px;
+  height: 60px;
+  background: rgba(15, 15, 15, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(191,162,101,0.5);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gold);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  position: relative;
+}
+
+.waBtnActive {
+  background: var(--gold);
+  color: #000;
+  border-color: var(--gold);
+  transform: rotate(90deg); /* Animación copada al abrir */
+}
+
+.icon {
+  width: 32px;
+  height: 32px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Animación de pulso dorado tipo sonar */
+.pulse {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px solid var(--gold);
+  animation: pulseAnim 2.5s infinite cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 1;
+}
+
+@keyframes pulseAnim {
+  0% { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .waBtn:hover:not(.waBtnActive) {
+    background: var(--gold);
+    color: var(--ink, #050505);
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(191,162,101,0.3);
+    border-color: var(--gold);
+  }
+  .waBtn:hover:not(.waBtnActive) .icon {
+    transform: scale(1.1);
+  }
+  .waBtn:hover .pulse {
+    display: none;
+  }
+}
+
+/* Ajustes para Mobile */
+@media (max-width: 768px) {
+  .wrapper {
+    bottom: 1.5rem;
+    right: 1.5rem;
+  }
+  .waBtn {
+    width: 54px;
+    height: 54px;
+  }
+  .icon {
+    width: 28px;
+    height: 28px;
+  }
+  .menu {
+    bottom: 70px;
+    width: 240px;
+  }
+}

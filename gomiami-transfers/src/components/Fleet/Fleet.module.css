@@ -1,287 +1,339 @@
 .section {
-  padding: var(--gap-xl) 5rem;
-  background: var(--ink);
   position: relative;
+  background: var(--ink, #050505);
+  padding: 6rem 0; /* Padding general reducido */
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
-.inner { max-width: 1400px; margin: 0 auto; }
+/* El inner ahora no tiene padding lateral en mobile para que el scroll llegue a los bordes */
+.inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0; 
+}
 
+/* ── Header ── */
 .header {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 5rem;
-  max-width: 640px;
+  text-align: center;
+  margin-bottom: 2.5rem;
+  padding: 0 1.5rem; /* El texto mantiene su margen */
 }
 
 .tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.75rem;
+  display: inline-block;
   font-family: var(--font-body);
-  font-size: 0.58rem;
-  letter-spacing: 0.48em;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.3em;
   text-transform: uppercase;
   color: var(--gold);
-  margin-bottom: 1.5rem;
-}
-
-.tag::before, .tag::after {
-  content: '';
-  display: block;
-  width: 28px; height: 1px;
-  background: var(--gold-line);
+  margin-bottom: 1rem;
 }
 
 .title {
   font-family: var(--font-display);
-  font-size: clamp(2.6rem, 5vw, 5.2rem);
+  font-size: clamp(2.8rem, 8vw, 4.5rem);
   font-weight: 400;
-  line-height: 1.08;
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 1.4rem;
+  line-height: 1.1;
+  color: #fff;
+  margin-bottom: 1rem;
 }
 
 .titleAccent {
+  display: block;
   font-style: italic;
-  font-weight: 600;
   color: var(--gold);
 }
 
 .subtitle {
   font-family: var(--font-ui);
-  font-size: 0.85rem;
-  line-height: 1.9;
-  color: var(--cream-dim);
-  letter-spacing: 0.03em;
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.6);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.5;
 }
 
-/* ── Grid ── */
+/* ── Mobile-First: Swipe Carousel con Efecto "Peek" ── */
+.gridWrapper {
+  position: relative;
+  width: 100%;
+}
+
 .grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2px;
-  background: rgba(191,162,101,0.07);
+  display: flex;
+  overflow-x: auto;
+  gap: 1rem; /* Menor espacio entre tarjetas */
+  padding: 0.5rem 1.5rem 2rem 1.5rem; /* Padding lateral interno para asomar */
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  scroll-padding-left: 1.5rem; /* El imán frena respetando el padding */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
+.grid::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── Tarjetas Más Compactas ── */
 .card {
-  background: var(--ink);
-  padding: 2.8rem 2.4rem 2.4rem;
+  /* EL SECRETO UX: 78vw hace que la siguiente tarjeta se asome claramente a la derecha */
+  flex: 0 0 78vw; 
+  scroll-snap-align: start; /* Se alinea a la izquierda */
+  background: rgba(20,20,20,0.6);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 18px;
   display: flex;
   flex-direction: column;
   position: relative;
   overflow: hidden;
-  transition: background var(--t-mid);
+  transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
 }
 
-.card:hover { background: var(--ink-3); }
-
-/* Esquina decorativa */
-.card::before {
-  content: '';
-  position: absolute;
-  top: 1rem; right: 1rem;
-  width: 18px; height: 18px;
-  border-top: 1px solid var(--gold-line);
-  border-right: 1px solid var(--gold-line);
-  transition: opacity var(--t-mid);
+@media (hover: hover) and (pointer: fine) {
+  .card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(191,162,101,0.4);
+    background: rgba(30,30,30,0.8);
+  }
 }
 
-.card:hover::before { border-color: var(--gold); }
-
-/* ── Card header ── */
 .cardHead {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  margin-bottom: 1.8rem;
+  align-items: center;
+  padding: 1rem 1.2rem 0; /* Padding más compacto */
+  position: relative;
+  z-index: 2;
 }
 
 .cardBadge {
   font-family: var(--font-body);
-  font-size: 0.5rem;
-  letter-spacing: 0.3em;
+  font-size: 0.55rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
+  background: rgba(191,162,101,0.1);
   color: var(--gold);
-  background: var(--gold-subtle);
-  border: 1px solid var(--gold-line);
-  padding: 0.3rem 0.65rem;
-  border-radius: var(--r);
+  padding: 0.3rem 0.6rem;
+  border-radius: 100px;
+  border: 1px solid rgba(191,162,101,0.2);
 }
 
 .cardYear {
-  font-family: var(--font-display);
-  font-size: 0.85rem;
-  font-weight: 400;
-  font-style: italic;
-  color: var(--cream-dim);
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.4);
 }
 
-/* ── Imagen vehículo ── */
 .visual {
   position: relative;
   width: 100%;
-  height: 170px;
-  margin: 0 0 2rem 0;
+  height: 160px; /* Imagen más baja para no comer pantalla vertical */
+  padding: 0.5rem;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
-  /* Sin background propio — hereda el de la card */
 }
 
 .vehicleImg {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;       /* Respeta el PNG recortado sin deformarlo */
-  object-position: center bottom;
-  display: block;
-  transition: transform 0.5s ease, filter 0.5s ease;
-  filter: drop-shadow(0 10px 24px rgba(0,0,0,0.8));
+  width: 90%;
+  height: auto;
+  max-height: 100%;
+  object-fit: contain;
   position: relative;
+  z-index: 2;
+  filter: drop-shadow(0 10px 15px rgba(0,0,0,0.8));
+  transition: transform 0.4s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .card:hover .vehicleImg { transform: scale(1.05); }
+}
+
+.visualGlow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60%;
+  height: 40%;
+  background: var(--gold);
+  filter: blur(50px);
+  opacity: 0.08;
   z-index: 1;
 }
 
-.card:hover .vehicleImg {
-  transform: scale(1.04) translateY(-4px);
-  filter:
-    drop-shadow(0 16px 32px rgba(0,0,0,0.7))
-    drop-shadow(0 0 24px rgba(191,162,101,0.18));
+.cardContent {
+  padding: 0 1.2rem 1.2rem; /* Padding más compacto */
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
-/* Glow de piso — más dramático al hover */
-.visualGlow {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 85%;
-  height: 32px;
-  background: radial-gradient(ellipse at center, rgba(191,162,101,0.22) 0%, transparent 72%);
-  opacity: 0;
-  transition: opacity 0.45s ease, width 0.45s ease;
-  z-index: 0;
-}
-
-.card:hover .visualGlow {
-  opacity: 1;
-  width: 100%;
-}
-
-/* Línea de piso sutil */
-.visualGlow::after {
-  content: '';
-  position: absolute;
-  bottom: 6px;
-  left: 10%;
-  width: 80%;
-  height: 1px;
-  background: linear-gradient(to right, transparent, rgba(191,162,101,0.35), transparent);
-  opacity: 0;
-  transition: opacity 0.45s ease 0.1s;
-}
-
-.card:hover .visualGlow::after {
-  opacity: 1;
-}
-
-/* ── Info ── */
 .cardName {
   font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 400;
-  color: var(--cream);
+  font-size: 1.35rem; /* Texto levemente más chico */
+  color: #fff;
   margin-bottom: 0.8rem;
-  line-height: 1.2;
 }
 
 .cardSpecs {
   display: flex;
   align-items: center;
-  gap: 0.7rem;
-  margin-bottom: 1.6rem;
+  gap: 0.8rem;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
 }
 
 .spec {
   display: flex;
   align-items: center;
-  gap: 0.35rem;
-  font-family: var(--font-body);
-  font-size: 0.65rem;
-  letter-spacing: 0.08em;
-  color: var(--cream-dim);
+  gap: 0.4rem;
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.7);
 }
 
-.spec svg { color: var(--gold); }
+.spec svg {
+  color: var(--gold);
+}
 
 .specSep {
-  width: 3px; height: 3px;
+  width: 4px;
+  height: 4px;
   border-radius: 50%;
-  background: var(--gold);
-  opacity: 0.4;
+  background: rgba(255,255,255,0.2);
 }
 
 .features {
   list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem 0;
   display: flex;
   flex-direction: column;
-  gap: 0.55rem;
-  margin-bottom: 2.2rem;
+  gap: 0.6rem; /* Features más juntas */
   flex: 1;
 }
 
 .features li {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.5rem;
   font-family: var(--font-ui);
-  font-size: 0.7rem;
-  letter-spacing: 0.04em;
-  color: var(--cream-dim);
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.6);
 }
 
 .featureDot {
-  width: 3px; height: 3px;
-  border-radius: 50%;
+  width: 5px;
+  height: 5px;
   background: var(--gold);
-  opacity: 0.55;
-  flex-shrink: 0;
+  border-radius: 50%;
+  opacity: 0.5;
 }
 
 .selectBtn {
-  background: transparent;
-  border: 1px solid var(--gold-line);
-  color: var(--cream-dim);
-  font-family: var(--font-body);
-  font-size: 0.58rem;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  padding: 0.95rem 1.5rem;
-  cursor: pointer;
-  transition: all var(--t-mid);
   width: 100%;
-  border-radius: var(--r);
-  position: relative;
-  overflow: hidden;
+  background: transparent;
+  color: var(--gold);
+  border: 1px solid rgba(191,162,101,0.3);
+  padding: 0.8rem; /* Botón un poco más fino */
+  border-radius: 12px;
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-.selectBtn::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--gold);
-  transform: translateY(101%);
-  transition: transform var(--t-mid);
+.selectBtn:active {
+  transform: scale(0.97);
+  background: rgba(191,162,101,0.1);
 }
 
-.selectBtn:hover { color: var(--ink); border-color: var(--gold); }
-.selectBtn:hover::before { transform: translateY(0); }
-.selectBtn span { position: relative; z-index: 1; }
-
-@media (max-width: 1100px) {
-  .grid { grid-template-columns: repeat(2, 1fr); }
+@media (hover: hover) and (pointer: fine) {
+  .selectBtn:hover {
+    background: var(--gold);
+    color: #000;
+    border-color: var(--gold);
+  }
 }
 
-@media (max-width: 700px) {
-  .section { padding: 5rem 2rem; }
-  .grid { grid-template-columns: 1fr; }
+/* ── Hint de Swipe tipo "Pill" animado ── */
+.swipeHintWrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: -0.5rem;
+  padding-bottom: 1rem;
+}
+
+.swipeHint {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  background: rgba(191,162,101,0.08);
+  border: 1px solid rgba(191,162,101,0.15);
+  padding: 0.5rem 1.2rem;
+  border-radius: 100px;
+  color: var(--gold);
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  animation: floatHint 2.5s infinite ease-in-out;
+}
+
+.swipeHint svg {
+  animation: pulseArrows 2.5s infinite ease-in-out;
+}
+
+@keyframes floatHint {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(-5px); }
+}
+
+@keyframes pulseArrows {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+/* ── Desktop: Vuelve a ser Grilla Normal ── */
+@media (min-width: 768px) {
+  .section { padding: 8rem 0; }
+  .inner { padding: 0 5rem; }
+  .header { padding: 0; margin-bottom: 4rem; }
+  
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2.5rem;
+    overflow-x: visible;
+    padding: 2rem 0;
+  }
+  
+  .card {
+    flex: none;
+    width: 100%;
+  }
+
+  /* Vuelve a los tamaños originales en PC */
+  .visual { height: 220px; }
+  .cardHead { padding: 1.5rem 1.5rem 0; }
+  .cardContent { padding: 0 1.5rem 1.5rem; }
+  .cardName { font-size: 1.5rem; }
+  .cardSpecs { padding-bottom: 1.5rem; }
+  .features { gap: 0.8rem; margin: 0 0 2rem 0; }
+  .selectBtn { padding: 1rem; }
+
+  .swipeHintWrapper {
+    display: none; /* Se oculta en PC */
+  }
 }

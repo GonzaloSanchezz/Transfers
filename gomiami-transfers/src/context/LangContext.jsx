@@ -1,6 +1,6 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useState } from 'react';
 
-const LangContext = createContext()
+const LangContext = createContext();
 
 export const translations = {
   en: {
@@ -12,51 +12,48 @@ export const translations = {
       contact: 'Contact',
     },
     hero: {
-      tag: 'Miami\'s Premier Executive Transport',
+      tag: "Miami's Premier Executive Transport",
       title: 'Arrive in\nAbsolute',
       titleAccent: 'Luxury.',
       subtitle: 'Private transfers, executive fleets & VIP experiences across Miami, Orlando and beyond.',
       cta: 'Book Your Transfer',
       ctaSub: 'View Our Fleet',
     },
-    // Agregá estas keys a tu archivo de traducciones (ej: es.js / en.js)
-// Las keys nuevas respecto a la versión anterior están marcadas con // NEW
-
-  services: {
-    tag: 'Nuestros Servicios',
-    title: 'Lo que\nofrece­mos',
-    bookNow: 'Reservar',
-    items: [
-      {
-        title: 'Puerto – Hotel',
-        desc: 'Lo buscamos directamente en el Puerto de Miami y lo llevamos a su hotel sin escalas ni demoras.',
-      },
-      {
-        title: 'Aeropuerto – Hotel',
-        desc: 'Traslados desde el MIA o FLL a cualquier hotel de Miami. Conductor esperando a su llegada.',
-      },
-      {
-        title: 'Miami – Orlando',
-        desc: 'Viaje interestatal en vehículos ejecutivos. Cómodo, directo y sin necesidad de alquilar auto.',
-      },
-      {
-        title: 'Key West',
-        desc: 'Recorra el Overseas Highway sin preocupaciones. Disfrute el paisaje mientras nosotros manejamos.',
-      },
-      {
-        title: 'Tour de Compras',
-        desc: 'Sawgrass Mills, Dolphin Mall, Aventura y más. Le llevamos a los mejores centros comerciales.',
-      },
-      {
-        title: 'Traslados a Estadios',
-        desc: 'Hard Rock Stadium, Kaseya Center y más. Llegue y regrese sin el estrés del tráfico ni estacionamiento.',
-      },
-      {
-        title: 'Traslados Nocturnos',
-        desc: 'Servicio disponible las 24 horas. Ideal para vuelos tardíos, eventos nocturnos o llegadas de madrugada.',
-      },
-    ],
-  },
+    services: {
+      tag: 'Our Services',
+      title: 'What We\nOffer',
+      bookNow: 'Book Now',
+      items: [
+        {
+          title: 'Port – Hotel',
+          desc: 'We pick you up directly at the Port of Miami and take you to your hotel with no stops or delays.',
+        },
+        {
+          title: 'Airport – Hotel',
+          desc: 'Transfers from MIA or FLL to any hotel in Miami. Chauffeur waiting upon your arrival.',
+        },
+        {
+          title: 'Miami – Orlando',
+          desc: 'Interstate travel in executive vehicles. Comfortable, direct, and no need to rent a car.',
+        },
+        {
+          title: 'Key West',
+          desc: 'Travel the Overseas Highway worry-free. Enjoy the scenery while we drive.',
+        },
+        {
+          title: 'Shopping Tour',
+          desc: 'Sawgrass Mills, Dolphin Mall, Aventura, and more. We take you to the best shopping centers.',
+        },
+        {
+          title: 'Stadium Transfers',
+          desc: 'Hard Rock Stadium, Kaseya Center, and more. Arrive and return without the stress of traffic or parking.',
+        },
+        {
+          title: 'Night Transfers',
+          desc: '24-hour service available. Ideal for late flights, night events, or early morning arrivals.',
+        },
+      ],
+    },
     fleet: {
       tag: 'Our Fleet',
       title: 'Every Vehicle.\nBlack. 2025.',
@@ -83,7 +80,7 @@ export const translations = {
       notes: 'Special requests (optional)',
       submit: 'Send via WhatsApp',
       selectVehicle: 'Select a vehicle',
-      fromPlaceholder: 'e.g. Miami Int\'l Airport',
+      fromPlaceholder: "e.g. Miami Int'l Airport",
       toPlaceholder: 'e.g. Brickell, Miami',
     },
     footer: {
@@ -112,16 +109,38 @@ export const translations = {
       ctaSub: 'Ver Nuestra Flota',
     },
     services: {
-      tag: 'Lo que Ofrecemos',
-      title: 'Diseñado para\nCada Viaje',
+      tag: 'Nuestros Servicios',
+      title: 'Lo que\nofrecemos',
       bookNow: 'Reservar',
       items: [
-        { title: 'Aeropuerto → Hotel', desc: 'Recogida en MIA y FLL. Tu chofer espera en llegadas con tu nombre en pantalla.' },
-        { title: 'Hotel → Aeropuerto', desc: 'Salidas puntuales. Monitoreamos tu vuelo para que nunca pierdas una conexión.' },
-        { title: 'Miami → Orlando',    desc: 'Traslados interurbanos de lujo en total comodidad. Relájate mientras nosotros manejamos.' },
-        { title: 'Casinos',            desc: 'Viajes privados a Hard Rock, Seminole y más. Discreto, confiable, a tu horario.' },
-        { title: 'Puerto de Miami',    desc: 'Traslados a terminales de cruceros con asistencia de equipaje. Empieza tu viaje bien.' },
-        { title: 'Grupos y Eventos',   desc: 'Eventos corporativos, bodas y chárters grupales. Coordinamos cada vehículo y detalle.' },
+        {
+          title: 'Puerto – Hotel',
+          desc: 'Lo buscamos directamente en el Puerto de Miami y lo llevamos a su hotel sin escalas ni demoras.',
+        },
+        {
+          title: 'Aeropuerto – Hotel',
+          desc: 'Traslados desde el MIA o FLL a cualquier hotel de Miami. Conductor esperando a su llegada.',
+        },
+        {
+          title: 'Miami – Orlando',
+          desc: 'Viaje interestatal en vehículos ejecutivos. Cómodo, directo y sin necesidad de alquilar auto.',
+        },
+        {
+          title: 'Key West',
+          desc: 'Recorra el Overseas Highway sin preocupaciones. Disfrute el paisaje mientras nosotros manejamos.',
+        },
+        {
+          title: 'Tour de Compras',
+          desc: 'Sawgrass Mills, Dolphin Mall, Aventura y más. Le llevamos a los mejores centros comerciales.',
+        },
+        {
+          title: 'Traslados a Estadios',
+          desc: 'Hard Rock Stadium, Kaseya Center y más. Llegue y regrese sin el estrés del tráfico ni estacionamiento.',
+        },
+        {
+          title: 'Traslados Nocturnos',
+          desc: 'Servicio disponible las 24 horas. Ideal para vuelos tardíos, eventos nocturnos o llegadas de madrugada.',
+        },
       ],
     },
     fleet: {
@@ -150,7 +169,7 @@ export const translations = {
       notes: 'Solicitudes especiales (opcional)',
       submit: 'Enviar por WhatsApp',
       selectVehicle: 'Seleccionar vehículo',
-      fromPlaceholder: 'Ej. Aeropuerto Int\'l de Miami',
+      fromPlaceholder: "Ej. Aeropuerto Int'l de Miami",
       toPlaceholder: 'Ej. Brickell, Miami',
     },
     footer: {
@@ -161,16 +180,17 @@ export const translations = {
       social: 'Síguenos',
     },
   },
-}
+};
 
 export function LangProvider({ children }) {
-  const [lang, setLang] = useState('en')
-  const t = translations[lang]
+  const [lang, setLang] = useState('es');
+  const t = translations[lang];
+
   return (
     <LangContext.Provider value={{ lang, setLang, t }}>
       {children}
     </LangContext.Provider>
-  )
+  );
 }
 
-export const useLang = () => useContext(LangContext)
+export const useLang = () => useContext(LangContext);

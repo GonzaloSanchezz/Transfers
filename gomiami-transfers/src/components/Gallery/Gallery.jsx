@@ -8,14 +8,6 @@ import airportPickupImg from '../../assets/gallery-airport-pickup.jpg'
 import portTransferImg  from '../../assets/gallery-port-transfer.jpg'
 import orlandoRouteImg from '../../assets/gallery-orlando-route.jpg'
 
-const items = [
-  { id: 1, label: 'Interior VIP',   aspect: 'wide',   img: interiorVipImg  },
-  { id: 2, label: 'Night Transfer', aspect: 'tall',   img: nightTransferImg },
-  { id: 3, label: 'Airport Pickup', aspect: 'normal', img: airportPickupImg },
-  { id: 4, label: 'Port Transfer',  aspect: 'normal', img: portTransferImg },
-  { id: 5, label: 'Orlando Route',  aspect: 'wide',   img: orlandoRouteImg },
-]
-
 function GalleryItem({ item }) {
   const [active, setActive] = useState(false)
   return (
@@ -40,7 +32,16 @@ function GalleryItem({ item }) {
 }
 
 export default function Gallery() {
-  const { t } = useLang()
+  const { t, lang } = useLang()
+  const isEs = lang === 'es'
+
+  const items = [
+    { id: 1, label: 'Interior VIP',   aspect: 'wide',   img: interiorVipImg  },
+    { id: 2, label: isEs ? 'Traslado Nocturno' : 'Night Transfer', aspect: 'tall',   img: nightTransferImg },
+    { id: 3, label: isEs ? 'Recogida Aeropuerto' : 'Airport Pickup', aspect: 'normal', img: airportPickupImg },
+    { id: 4, label: isEs ? 'Traslado a Puerto' : 'Port Transfer',  aspect: 'normal', img: portTransferImg },
+    { id: 5, label: isEs ? 'Ruta a Orlando' : 'Orlando Route',  aspect: 'wide',   img: orlandoRouteImg },
+  ]
 
   return (
     <section className={styles.section} id="gallery">
